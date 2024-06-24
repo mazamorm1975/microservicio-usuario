@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ser.std.UUIDSerializer;
 import com.usuario.models.Carro;
-import com.usuario.models.Moto;
+import com.usuario.models.Motocicleta;
 import com.usuario.models.Usuario;
 import com.usuario.service.usuarioService;
 
@@ -57,7 +56,6 @@ public class Controller {
 	}
 	
 	
-	
 	//Se genera API Rest para llamar al servicio que conectara con el microservice_coche
 	@GetMapping("/coche/{usuarioId}")
 	public ResponseEntity<List<Carro>> consigueVehiculosPorUsuarioId(@PathVariable("usuarioId") int usuarioId){
@@ -75,7 +73,7 @@ public class Controller {
 	}
 	
 	@GetMapping("/moto/{usuarioId}")
-	public ResponseEntity<List<Moto>> reporteTotalMotosPorIdUsuario(@PathVariable("usuarioId") int usuarioId){
+	public ResponseEntity<List<Motocicleta>> reporteTotalMotosPorIdUsuario(@PathVariable("usuarioId") int usuarioId){
 		
 		Usuario usuario_1 = userService.listarUsuarioPorId(usuarioId);
 		
@@ -84,9 +82,37 @@ public class Controller {
 			return ResponseEntity.notFound().build();
 		}
 		
-	  List<Moto> listadoCompletoPorUsuarioId = userService.obtenerListadoMotocicletasPorUsuarioID(usuarioId);
+	  List<Motocicleta> listadoCompletoPorUsuarioId = userService.obtenerListadoMotocicletasPorUsuarioID(usuarioId);
 		
-		return new ResponseEntity<List<Moto>>(listadoCompletoPorUsuarioId, HttpStatus.OK);
+		return new ResponseEntity<List<Motocicleta>>(listadoCompletoPorUsuarioId, HttpStatus.OK);
 	}
+	
+	
+	@PostMapping("/carro/{usuarioId}")
+	public ResponseEntity<Carro> guardarCoche(@PathVariable("usuarioId") int usuarioId, @RequestBody Carro car){
+		
+		Carro coche = userService.saveCarro(usuarioId, car);
+		
+		return new ResponseEntity<Carro>(coche, HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/carro_2/{carroId}")
+	public ResponseEntity<List<Carro>> consultaPorIdCarro(@PathVariable("carroId") int carroId){
+		
+	List<Carro> car_final_info = userService.consultaCarroPorId(carroId);
+	
+	return new ResponseEntity<List<Carro>>(car_final_info, HttpStatus.OK);
+	
+	}
+	
+	@PostMapping("/guardarMoto/{motoUserId}")
+	public ResponseEntity<Motocicleta> guardadoRegistroMotoConUserId(@PathVariable("motoUserId") int motoUserId, @RequestBody Motocicleta moto){
+		
+	   Motocicleta moto_final_info = userService.salvarMotosPorIdUsuario(motoUserId, moto);
+		
+		return new ResponseEntity<Motocicleta>(moto_final_info, HttpStatus.CREATED);
+	}
+	
+	
 	
 }
