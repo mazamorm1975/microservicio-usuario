@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.usuario.models.Carro;
+import com.usuario.models.Empleado;
 import com.usuario.models.Motocicleta;
 import com.usuario.models.Usuario;
 import com.usuario.service.usuarioService;
@@ -113,6 +114,22 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto_final_info, HttpStatus.CREATED);
 	}
 	
+	//Servicio Rest para ubicar a un empleado por id conectando con el microservicio-empleado
+	//utilizando RestTemplate
+	@GetMapping("/busquedaEmpleado/{id}")
+	public ResponseEntity<Empleado> busquedaEmpleadoPorId(@PathVariable("id") int id){
 	
+	 Empleado empleado_report =	userService.obtenerEmpleadoPorId(id);
+		
+		return new ResponseEntity<Empleado>(empleado_report, HttpStatus.OK);
+	}
+	
+	@GetMapping("/buscarEmpId/{id}")
+	public ResponseEntity<Empleado> busquedaEmpleadoID(@PathVariable("id")int id){
+		
+	 Empleado emp =	userService.ubicarEmpleadoPorId(id);
+	 
+	 return new ResponseEntity<Empleado>(emp, HttpStatus.OK);
+	}
 	
 }

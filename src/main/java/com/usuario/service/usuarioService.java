@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.usuario.feignclientes.CarroFeignClient;
+import com.usuario.feignclientes.EmpleadoFeignClient;
 import com.usuario.feignclientes.MotoFeignClient;
 import com.usuario.models.Carro;
+import com.usuario.models.Empleado;
 import com.usuario.models.Motocicleta;
 import com.usuario.models.Usuario;
 import com.usuario.repository.usuarioRepository;
@@ -23,6 +25,9 @@ public class usuarioService {
 	
 	@Autowired
 	private CarroFeignClient carroFeignCliente;
+	
+	@Autowired
+	private EmpleadoFeignClient empleadoFeignClient;
 	
 	
 	@Autowired
@@ -47,6 +52,14 @@ public class usuarioService {
 	  return listadoMotosIdUser;
 	}
 	
+	//Conexion con el microservicio-empleado pasando como parametro el id del empleado
+	public Empleado obtenerEmpleadoPorId(int id){
+		
+		Empleado moto = restTemplate.getForObject("http://localhost:8004/empleado/consultaPorId/"+id, Empleado.class);
+		
+		return moto;
+	}
+	
 	//Metodo que realiza la conexion con microservicio-coche para consulta por id de usuario
 	public List<Carro> consultaCarroPorId(int carroId) {
 		
@@ -62,6 +75,14 @@ public class usuarioService {
 		Carro car = carroFeignCliente.save(carro);
 		
 		return car;
+	}
+	
+	
+	public Empleado ubicarEmpleadoPorId(int id) {
+		
+	  Empleado em =	empleadoFeignClient.buscarEmpleadoPorId(id);
+	
+	return em;
 	}
 	
 	public Motocicleta salvarMotosPorIdUsuario(int usuarioIdMoto, Motocicleta moto) {
