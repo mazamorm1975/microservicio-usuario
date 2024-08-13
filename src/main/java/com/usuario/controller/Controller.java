@@ -104,9 +104,6 @@ public class Controller {
 	
 	
 	
-	
-	
-	
 	@GetMapping("/moto/{usuarioId}")
 	public ResponseEntity<List<Motocicleta>> reporteTotalMotosPorIdUsuario(@PathVariable("usuarioId") int usuarioId){
 		
@@ -190,21 +187,14 @@ public class Controller {
 		return circuitBreakerFactory.create("guardarMoto").run(() -> microservicioMotocicleta(motoUserId, moto), throwable ->metodoFallBack());
 	}
 	
-	//Servicio Rest para ubicar a un empleado por id conectando con el microservicio-empleado
-	//utilizando RestTemplate
-	@GetMapping("/busquedaEmpleado/{id}")
-	public ResponseEntity<Empleado> busquedaEmpleadoPorId(@PathVariable("id") int id){
 	
-<<<<<<< HEAD
 	public ResponseEntity<Motocicleta> microservicioMotocicleta(int usuarioId, Motocicleta moto){
 		
 		Motocicleta moto_final_result = userService.salvarMotosPorIdUsuario(usuarioId, moto);
 		
 		return new ResponseEntity<Motocicleta>(moto_final_result, HttpStatus.CREATED);
-=======
-	 Empleado empleado_report =	userService.obtenerEmpleadoPorId(id);
-		
-		return new ResponseEntity<Empleado>(empleado_report, HttpStatus.OK);
+
+	
 	}
 	
 	@GetMapping("/buscarEmpId/{id}")
@@ -213,7 +203,7 @@ public class Controller {
 	 Empleado emp =	userService.ubicarEmpleadoPorId(id);
 	 
 	 return new ResponseEntity<Empleado>(emp, HttpStatus.OK);
->>>>>>> 1f1fdd4ede61231994f6a757f918f2d9f5003915
+
 	}
 	
 	

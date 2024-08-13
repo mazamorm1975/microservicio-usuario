@@ -71,7 +71,7 @@ public class usuarioService {
 	  return listadoMotosIdUser;
 	}
 	
-<<<<<<< HEAD
+
 	
 	//Metodo para guardar un registro de motocicleta llamando el microservicio-motocicleta con RestTemplate
 	public Motocicleta guardarMoto(int usuarioId, Motocicleta moto) {
@@ -84,7 +84,7 @@ public class usuarioService {
 	}
 	
 		
-=======
+
 	//Conexion con el microservicio-empleado pasando como parametro el id del empleado
 	public Empleado obtenerEmpleadoPorId(int id){
 		
@@ -93,7 +93,7 @@ public class usuarioService {
 		return moto;
 	}
 	
->>>>>>> 1f1fdd4ede61231994f6a757f918f2d9f5003915
+
 	//Metodo que realiza la conexion con microservicio-coche para consulta por id de usuario
 	public List<Carro> consultaCarroPorId(int carroId) {
 		
@@ -113,15 +113,14 @@ public class usuarioService {
 	}
 	
 	
-<<<<<<< HEAD
-=======
+
 	public Empleado ubicarEmpleadoPorId(int id) {
 		
 	  Empleado em =	empleadoFeignClient.buscarEmpleadoPorId(id);
 	
 	return em;
 	}
->>>>>>> 1f1fdd4ede61231994f6a757f918f2d9f5003915
+
 	
 	public Motocicleta salvarMotosPorIdUsuario(int usuarioIdMoto, Motocicleta moto) {
 		moto.setUsuarioId(usuarioIdMoto);
