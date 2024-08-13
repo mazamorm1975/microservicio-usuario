@@ -17,8 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.usuario.feignclientes.CarroFeignClient;
+import com.usuario.feignclientes.EmpleadoFeignClient;
 import com.usuario.feignclientes.MotoFeignClient;
 import com.usuario.models.Carro;
+import com.usuario.models.Empleado;
 import com.usuario.models.Motocicleta;
 import com.usuario.models.Usuario;
 import com.usuario.repository.usuarioRepository;
@@ -37,6 +39,9 @@ public class usuarioService {
 	
 	@Autowired
 	private CarroFeignClient carroFeignCliente;
+	
+	@Autowired
+	private EmpleadoFeignClient empleadoFeignClient;
 	
 	
 	@Autowired
@@ -66,6 +71,7 @@ public class usuarioService {
 	  return listadoMotosIdUser;
 	}
 	
+<<<<<<< HEAD
 	
 	//Metodo para guardar un registro de motocicleta llamando el microservicio-motocicleta con RestTemplate
 	public Motocicleta guardarMoto(int usuarioId, Motocicleta moto) {
@@ -78,6 +84,16 @@ public class usuarioService {
 	}
 	
 		
+=======
+	//Conexion con el microservicio-empleado pasando como parametro el id del empleado
+	public Empleado obtenerEmpleadoPorId(int id){
+		
+		Empleado moto = restTemplate.getForObject("http://localhost:8004/empleado/consultaPorId/"+id, Empleado.class);
+		
+		return moto;
+	}
+	
+>>>>>>> 1f1fdd4ede61231994f6a757f918f2d9f5003915
 	//Metodo que realiza la conexion con microservicio-coche para consulta por id de usuario
 	public List<Carro> consultaCarroPorId(int carroId) {
 		
@@ -97,6 +113,15 @@ public class usuarioService {
 	}
 	
 	
+<<<<<<< HEAD
+=======
+	public Empleado ubicarEmpleadoPorId(int id) {
+		
+	  Empleado em =	empleadoFeignClient.buscarEmpleadoPorId(id);
+	
+	return em;
+	}
+>>>>>>> 1f1fdd4ede61231994f6a757f918f2d9f5003915
 	
 	public Motocicleta salvarMotosPorIdUsuario(int usuarioIdMoto, Motocicleta moto) {
 		moto.setUsuarioId(usuarioIdMoto);
