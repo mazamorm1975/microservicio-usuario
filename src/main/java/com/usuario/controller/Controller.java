@@ -139,7 +139,7 @@ public class Controller {
 		
 		loger.info("En espera de response de petición HttpPost");
 		
-		if(Objects.isNull(car.getMarca()) || Objects.isNull(car.getModelo())) {
+		if(car.getMarca().isEmpty() || car.getModelo().isEmpty()) {
 			throw new Exception("No fue posible la inserción del registro");
 		}
 		
