@@ -4,6 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 @Configuration
 public class ConfiguracionRestTemplate {
 
@@ -12,5 +15,6 @@ public class ConfiguracionRestTemplate {
 
 		return new RestTemplate();
 	}
+	
 
 }

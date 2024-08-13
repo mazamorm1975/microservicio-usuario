@@ -8,4 +8,5 @@ import com.usuario.models.Usuario;
 public interface usuarioRepository extends JpaRepository<Usuario, Integer> {
 
 
+
 }
