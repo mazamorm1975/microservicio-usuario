@@ -23,193 +23,180 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.usuario.exceptions.ExcepcionesPersonalizadas;
 import com.usuario.models.Carro;
 import com.usuario.models.Empleado;
 import com.usuario.models.Motocicleta;
 import com.usuario.models.Usuario;
-import com.usuario.service.usuarioService;
+import com.usuario.service.UsuarioService;
+import com.usuario.serviceImpl.UsuarioServiceImpl;
 
 import feign.FeignException.NotFound;
 import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.validation.Valid;
 import reactor.core.publisher.Mono;
 
-
 @RestController
 @RequestMapping("/usuario")
 public class Controller {
-	
+
 	Logger loger = LoggerFactory.getLogger(Controller.class);
 
 	@Autowired
-	private Resilience4JCircuitBreakerFactory circuitBreakerFactory;	
-	
+	private Resilience4JCircuitBreakerFactory circuitBreakerFactory;
+
 	@Autowired
-	private usuarioService userService;
-	
-	
+	private UsuarioService userService;
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> obtieneUsuarioPorId(@PathVariable("id") int id) throws Exception{
-		
-		Usuario user1 =  userService.listarUsuarioPorId(id);
-		
-		if(Objects.isNull(user1)) {
+	public ResponseEntity<Usuario> obtieneUsuarioPorId(@PathVariable("id") int id) throws Exception {
+
+		Usuario user1 = userService.listarUsuarioPorId(id);
+
+		if (Objects.isNull(user1)) {
 			throw new Exception("No fue posible la ubicación de este usuario en la base de datos");
 		}
-		
+
 		return new ResponseEntity<Usuario>(user1, HttpStatus.OK);
 	}
-	
-	
-	
+
 	@GetMapping("/listadoCompleto")
-	public ResponseEntity<List<Usuario>> listadoCompleto(){
-		
-		
-	   List<Usuario> listado = userService.getAll();
-		
+	public ResponseEntity<List<Usuario>> listadoCompleto() {
+
+		List<Usuario> listado = userService.getAll();
+
 		return new ResponseEntity<>(listado, HttpStatus.OK);
 	}
-	
-		
-	
+
 	@PostMapping("/guardar")
-	public ResponseEntity<Usuario> registrar(@Valid @RequestBody Usuario user) throws Exception{
-		
+	public ResponseEntity<Usuario> registrar(@Valid @RequestBody Usuario user) throws Exception {
+
 		Usuario user2 = userService.guardar(user);
-		
-			
+
 		return new ResponseEntity<Usuario>(user2, HttpStatus.CREATED);
 	}
-	
-	
-	//Se genera API Rest para llamar al servicio que conectara con el microservice_coche
+
+	// Se genera API Rest para llamar al servicio que conectara con el
+	// microservice_coche
 	@GetMapping("/coche/{usuarioId}")
-	public ResponseEntity<List<Carro>> consigueVehiculosPorUsuarioId(@PathVariable("usuarioId") int usuarioId){
-		
+	public ResponseEntity<List<Carro>> consigueVehiculosPorUsuarioId(@PathVariable("usuarioId") int usuarioId) {
+
 		Usuario user = userService.listarUsuarioPorId(usuarioId);
-		
-		if(user == null) {
-			
+
+		if (user == null) {
+
 			return ResponseEntity.notFound().build();
 		}
-		
-		//El metodo obtenerListadoVehiculos(int id), conecta con el microservicio-coche por medio de RestTemplate
-	    List<Carro> listadoCompletoDeVehiculos = userService.obtenerListadoVehiculos(usuarioId);
-		
-		return new ResponseEntity<List<Carro>>(listadoCompletoDeVehiculos, HttpStatus.OK);		
+
+		// El metodo obtenerListadoVehiculos(int id), conecta con el microservicio-coche
+		// por medio de RestTemplate
+		List<Carro> listadoCompletoDeVehiculos = userService.obtenerListadoVehiculos(usuarioId);
+
+		return new ResponseEntity<List<Carro>>(listadoCompletoDeVehiculos, HttpStatus.OK);
 	}
-	
-	
-	
-	
+
 	@GetMapping("/moto/{usuarioId}")
-	public ResponseEntity<List<Motocicleta>> reporteTotalMotosPorIdUsuario(@PathVariable("usuarioId") int usuarioId){
-		
-				
+	public ResponseEntity<List<Motocicleta>> reporteTotalMotosPorIdUsuario(@PathVariable("usuarioId") int usuarioId) {
+
 		Usuario usuario_1 = userService.listarUsuarioPorId(usuarioId);
-		
-		if(usuario_1 == null) {
-			
+
+		if (usuario_1 == null) {
+
 			return ResponseEntity.notFound().build();
 		}
-		
-		//El metodo obtenerListadoMotocicletasPorUsuarioID(int id), conecta con el microservicio-motocicleta por medio de RestTemplate	
-	  List<Motocicleta> listadoCompletoPorUsuarioId = userService.obtenerListadoMotocicletasPorUsuarioID(usuarioId);
-		
+
+		// El metodo obtenerListadoMotocicletasPorUsuarioID(int id), conecta con el
+		// microservicio-motocicleta por medio de RestTemplate
+		List<Motocicleta> listadoCompletoPorUsuarioId = userService.obtenerListadoMotocicletasPorUsuarioID(usuarioId);
+
 		return new ResponseEntity<List<Motocicleta>>(listadoCompletoPorUsuarioId, HttpStatus.OK);
 	}
-	
-	
-	//El metodo guardarMoto(int usuarioId, Motocicleta moto) utiliza el proyecto spring cloud feign para llamar al microservicio-motocicleta
+
+	// El metodo guardarMoto(int usuarioId, Motocicleta moto) utiliza el proyecto
+	// spring cloud feign para llamar al microservicio-motocicleta
 	@PostMapping("/guardarMoto")
-	public ResponseEntity<Motocicleta> guardarRegistroMoto(@RequestBody Motocicleta moto){
-		
+	public ResponseEntity<Motocicleta> guardarRegistroMoto(@RequestBody Motocicleta moto) {
+
 		int usuarioId = moto.getUsuarioId();
 		Motocicleta motoRegistration = userService.guardarMoto(usuarioId, moto);
-		
+
 		return new ResponseEntity<Motocicleta>(motoRegistration, HttpStatus.CREATED);
 	}
-	
-	
+
 	@PostMapping("/carro/{usuarioId}")
-	@Retry(name="carro-usuario")
-	public ResponseEntity<Carro> guardarCoche(@PathVariable("usuarioId") int usuarioId, @RequestBody Carro car) throws Exception{
-		
+	@Retry(name = "carro-usuario")
+	public ResponseEntity<Carro> guardarCoche(@PathVariable("usuarioId") int usuarioId, @RequestBody Carro car)
+			throws Exception {
+
 		loger.info("En espera de response de petición HttpPost");
-		
-		if(car.getMarca().isEmpty() || car.getModelo().isEmpty()) {
+
+		if (car.getMarca().isEmpty() || car.getModelo().isEmpty()) {
 			throw new Exception("No fue posible la inserción del registro");
 		}
-		
-		
-		return circuitBreakerFactory.create("carro").run(() -> microservicioCoche(usuarioId, car), throwable -> fallback());
-	
+
+		return circuitBreakerFactory.create("carro").run(() -> microservicioCoche(usuarioId, car),
+				throwable -> fallback());
+
 	}
-	
-	
-	public ResponseEntity<Carro> microservicioCoche(int usuarioId, Carro car){
-		
-	   Carro car2 =	 userService.saveCarro(usuarioId, car);
-		
+
+	public ResponseEntity<Carro> microservicioCoche(int usuarioId, Carro car) {
+
+		Carro car2 = userService.saveCarro(usuarioId, car);
+
 		return new ResponseEntity<Carro>(car2, HttpStatus.OK);
 	}
-		
-	
-	private ResponseEntity<Carro> fallback()  {
-		
+
+	private ResponseEntity<Carro> fallback() {
+
 		loger.info("No fue posible la inserción del registro");
 		Carro car = new Carro();
-		
-				
-	    return new ResponseEntity<Carro>(car, HttpStatus.NO_CONTENT);
-    }
-	
-	
+
+		return new ResponseEntity<Carro>(car, HttpStatus.NO_CONTENT);
+	}
+
 	@GetMapping("/carro_2/{carroId}")
-	public ResponseEntity<List<Carro>> consultaPorIdCarro(@PathVariable("carroId") int carroId){
-		
-	List<Carro> car_final_info = userService.consultaCarroPorId(carroId);
-	
-	return new ResponseEntity<List<Carro>>(car_final_info, HttpStatus.OK);
-	
+	public ResponseEntity<List<Carro>> consultaPorIdCarro(@PathVariable("carroId") int carroId) {
+
+		List<Carro> car_final_info = userService.consultaCarroPorId(carroId);
+
+		return new ResponseEntity<List<Carro>>(car_final_info, HttpStatus.OK);
+
 	}
-	
-	
-	//IMPLEMENTACIÓN DEL PATRON SPRING CLOUD CIRCUIT-BREAKER
-	
+
+	// IMPLEMENTACIÓN DEL PATRON SPRING CLOUD CIRCUIT-BREAKER
+
 	@PostMapping("/guardarMoto/{motoUserId}")
-	public ResponseEntity<Motocicleta> guardadoRegistroMotoConUserId(@PathVariable("motoUserId") int motoUserId, @RequestBody Motocicleta moto){
-		
-	   //Motocicleta moto_final_info = userService.salvarMotosPorIdUsuario(motoUserId, moto);
-				
-		return circuitBreakerFactory.create("guardarMoto").run(() -> microservicioMotocicleta(motoUserId, moto), throwable ->metodoFallBack());
+	public ResponseEntity<Motocicleta> guardadoRegistroMotoConUserId(@PathVariable("motoUserId") int motoUserId,
+			@RequestBody Motocicleta moto) {
+
+		// Motocicleta moto_final_info = userService.salvarMotosPorIdUsuario(motoUserId,
+		// moto);
+
+		return circuitBreakerFactory.create("guardarMoto").run(() -> microservicioMotocicleta(motoUserId, moto),
+				throwable -> metodoFallBack());
 	}
-	
-	
-	public ResponseEntity<Motocicleta> microservicioMotocicleta(int usuarioId, Motocicleta moto){
-		
+
+	public ResponseEntity<Motocicleta> microservicioMotocicleta(int usuarioId, Motocicleta moto) {
+
 		Motocicleta moto_final_result = userService.salvarMotosPorIdUsuario(usuarioId, moto);
-		
+
 		return new ResponseEntity<Motocicleta>(moto_final_result, HttpStatus.CREATED);
 
-	
 	}
-	
+
 	@GetMapping("/buscarEmpId/{id}")
-	public ResponseEntity<Empleado> busquedaEmpleadoID(@PathVariable("id")int id){
-		
-	 Empleado emp =	userService.ubicarEmpleadoPorId(id);
-	 
-	 return new ResponseEntity<Empleado>(emp, HttpStatus.OK);
+	public ResponseEntity<Empleado> busquedaEmpleadoID(@PathVariable("id") int id) {
+
+		Empleado emp = userService.ubicarEmpleadoPorId(id);
+
+		return new ResponseEntity<Empleado>(emp, HttpStatus.OK);
 
 	}
-	
-	
-	private ResponseEntity<Motocicleta> metodoFallBack(){
+
+	private ResponseEntity<Motocicleta> metodoFallBack() {
 		loger.info("No fue posible comunicación con el microservicio-motocicleta");
-			Motocicleta moto = new Motocicleta();
-			return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
+		Motocicleta moto = new Motocicleta();
+		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 }

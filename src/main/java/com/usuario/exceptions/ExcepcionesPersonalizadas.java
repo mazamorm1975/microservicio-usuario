@@ -25,11 +25,18 @@ public class ExcepcionesPersonalizadas extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<Object> capturaTodasLasExcepciones(Exception ex, WebRequest request) throws Exception {
-		DetallesException userNotFoundException = new DetallesException(LocalDate.now(), ex.getMessage(),
+		
+		DetallesException userNotFoundException = new DetallesException(
+				
+				LocalDate.now(),
+				ex.getMessage(),
 				request.getDescription(false));
+		
 		userNotFoundException.getHora_excepcion();
+		userNotFoundException.setMensaje("No fue encontrado el usuario con este ID.");
 		userNotFoundException.getMensaje();
 		userNotFoundException.getDetalle_excepcion();
+		
 
 		return new ResponseEntity<Object>(userNotFoundException, HttpStatus.NOT_FOUND);
 
