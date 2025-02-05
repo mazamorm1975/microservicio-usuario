@@ -201,11 +201,6 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	private static int restaNumeros()
-	{
-		return 30-20;
-	}
-	
 	private static int metodoTest() {
 		return 15+5;	
 	}
@@ -228,7 +223,5 @@ public class Controller {
 
 	}
 	
-	private static int restaNumeros() {
-		return 30-20;
-	}
+	
 }
