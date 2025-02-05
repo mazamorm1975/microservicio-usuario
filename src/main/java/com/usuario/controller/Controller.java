@@ -206,4 +206,7 @@ public class Controller {
 		return 30-20;
 	}
 	
+	private static int metodoTest() {
+		return 5+5;		
+	}
 }
