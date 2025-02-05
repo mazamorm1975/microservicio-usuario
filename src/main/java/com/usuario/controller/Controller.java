@@ -202,7 +202,5 @@ public class Controller {
 	}
 	
 
-	private static int Division() {
-		return 8/2;
-	}
+	
 }
