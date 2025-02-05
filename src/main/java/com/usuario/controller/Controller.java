@@ -215,7 +215,7 @@ public class Controller {
 
 	}
 	
-	private static int metodoTest() {
-		return 15+5;		
+	private static int restaNumeros() {
+		return 30-20;
 	}
 }
