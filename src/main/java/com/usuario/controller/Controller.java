@@ -79,7 +79,6 @@ public class Controller {
 
 	// Se genera API Rest para llamar al servicio que conectara con el
 	// microservice_coche
-	//hola que tal, este es un TEST, ahora se agrega mas a la linea
 	@GetMapping("/coche/{usuarioId}")
 	public ResponseEntity<List<Carro>> consigueVehiculosPorUsuarioId(@PathVariable("usuarioId") int usuarioId) {
 
@@ -204,5 +203,9 @@ public class Controller {
 	
 	private static int sumaDosNumeros() {
 		return 10+10;
+	}
+	
+	private static int metodoTest() {
+		return 5+5;		
 	}
 }
