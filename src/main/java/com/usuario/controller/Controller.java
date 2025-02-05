@@ -91,6 +91,7 @@ public class Controller {
 
 		// El metodo obtenerListadoVehiculos(int id), conecta con el microservicio-coche
 		// por medio de RestTemplate
+		//lista de prueba
 		List<Carro> listadoCompletoDeVehiculos = userService.obtenerListadoVehiculos(usuarioId);
 
 		return new ResponseEntity<List<Carro>>(listadoCompletoDeVehiculos, HttpStatus.OK);
