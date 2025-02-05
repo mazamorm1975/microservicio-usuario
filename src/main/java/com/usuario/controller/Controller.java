@@ -231,4 +231,8 @@ public class Controller {
 		return 10+10;
 
 	}
+	
+	private static int metodoTest() {
+		return 5+5;		
+	}
 }
