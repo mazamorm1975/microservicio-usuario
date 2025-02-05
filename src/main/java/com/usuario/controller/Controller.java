@@ -204,21 +204,4 @@ public class Controller {
 	public static void Fibonacci() {
 		System.out.println("Esto es una prueba");
 	}
-	
-	private static int restaNumeros() {
-		return 30-20;
-	}
-	
-	private static int metodoTest() {
-		return 15+5;	
-	}
-
-	private static int sumaDosNumeros() {
-		return 10+10;
-
-	}
-	
-	private static int metodoTest() {
-		return 15+5;		
-	}
 }
