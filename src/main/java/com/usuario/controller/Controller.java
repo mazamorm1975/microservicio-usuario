@@ -197,11 +197,16 @@ public class Controller {
 
 	private ResponseEntity<Motocicleta> metodoFallBack() {
 		loger.info("No fue posible comunicación con el microservicio-motocicleta");
-		Motocicleta moto = new Motocicleta();
+		Motocicleta moto = new Motocicleta(); 
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
+
 	private static int metodoTest() {
 		return 15+5;		
+
+	private static int sumaDosNumeros() {
+		return 10+10;
+
 	}
 }
