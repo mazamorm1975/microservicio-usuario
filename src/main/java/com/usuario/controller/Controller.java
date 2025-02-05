@@ -206,4 +206,8 @@ public class Controller {
 		return 30-20;
 	}
 	
+	private static double sumatorioDecimales() {
+		return 300.54 + 1500.45;
+	}
+	
 }
