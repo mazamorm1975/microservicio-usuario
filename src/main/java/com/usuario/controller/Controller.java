@@ -202,11 +202,7 @@ public class Controller {
 	}
 	
 
-	private static int metodoTest() {
-		return 15+5;		
-
-	private static int sumaDosNumeros() {
-		return 10+10;
-
+	private static int Division() {
+		return 8/2;
 	}
 }
