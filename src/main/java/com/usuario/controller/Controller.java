@@ -201,4 +201,8 @@ public class Controller {
 		Motocicleta moto = new Motocicleta();
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
+	
+	private static int sumaDosNumeros() {
+		return 10+10;
+	}
 }
