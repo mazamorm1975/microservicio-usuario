@@ -204,4 +204,8 @@ public class Controller {
 	public static void Fibonacci() {
 		System.out.println("Esto es una prueba");
 	}
+	
+	private static int metodoTest() {
+		return 5+5;		
+	}
 }
