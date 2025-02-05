@@ -214,4 +214,8 @@ public class Controller {
 		return 10+10;
 
 	}
+	
+	private static int restaNumeros() {
+		return 30-20;
+	}
 }
