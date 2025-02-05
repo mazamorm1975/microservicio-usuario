@@ -205,4 +205,8 @@ public class Controller {
 	private static int Division() {
 		return 8/2;
 	}
+	
+	private static int metodoTest() {
+		return 5+5;		
+	}
 }
