@@ -210,4 +210,7 @@ public class Controller {
 		return 300.54 + 1500.45;
 	}
 	
+	private static int metodoTest() {
+		return 5+5;		
+	}
 }
