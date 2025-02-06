@@ -200,9 +200,5 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	public void ImprimerCurp(){
-	
-		System.out.println("ZAMM750618HDFMRR06");
-	}
 	
 }
