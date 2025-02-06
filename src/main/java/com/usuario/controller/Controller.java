@@ -201,8 +201,12 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	private static int restaNumeros()
-	{
+	private static int sumaDosNumeros() {
+		return 10+10;
+
+	}
+
+	private static int restaNumeros() {
 		return 30-20;
 	}
 	
@@ -212,10 +216,5 @@ public class Controller {
 	
 	private static int metodoTest() {
 		return 15+5;	
-	}
-
-	private static int sumaDosNumeros() {
-		return 10+10;
-
 	}
 }
