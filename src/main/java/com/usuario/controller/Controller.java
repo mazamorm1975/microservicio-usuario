@@ -201,13 +201,7 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	private static int restaNumeros()
-	{
-		return 30-20;
+	public static void Fibonacci() {
+		System.out.println("Esto es una prueba");
 	}
-	
-	private static double sumatorioDecimales() {
-		return 300.54 + 1500.45;
-	}
-	
 }
