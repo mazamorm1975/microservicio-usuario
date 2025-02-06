@@ -200,19 +200,8 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	private static int FibonacciRecursivo(int a) {
-		
-		if(a == 0) {
-			return 0;
-		} 
-		
-		if(a > 0) {
-			return 1;
-		}
-		
-		//Se retorn el fibo
-		return FibonacciRecursivo(a) - FibonacciRecursivo(a-1);
+	private double multiplicar(int x, int  y) {
+		return x * y;
 	}
-	
 	
 }
