@@ -91,7 +91,6 @@ public class Controller {
 
 		// El metodo obtenerListadoVehiculos(int id), conecta con el microservicio-coche
 		// por medio de RestTemplate
-		//lista de prueba
 		List<Carro> listadoCompletoDeVehiculos = userService.obtenerListadoVehiculos(usuarioId);
 
 		return new ResponseEntity<List<Carro>>(listadoCompletoDeVehiculos, HttpStatus.OK);
@@ -201,8 +200,19 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	
-	
+	private static int FibonacciRecursivo(int a) {
+		
+		if(a == 0) {
+			return 0;
+		} 
+		
+		if(a > 0) {
+			return 1;
+		}
+		
+		//Se retorn el fibo
+		return FibonacciRecursivo(a) - FibonacciRecursivo(a-1);
+	}
 	
 	
 }
