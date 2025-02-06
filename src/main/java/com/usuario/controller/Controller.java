@@ -201,8 +201,9 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	public static void Fibonacci() {
-		System.out.println("Esto es una prueba");
+	public static int FibonacciRecursivo(int a, int b) {
+		
+		return a + b;
 	}
 
 	
