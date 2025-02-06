@@ -200,6 +200,8 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	
+	private  String imprimeNombre() {
+		return "Mi nombre es Mario";
+	}
 	
 }
