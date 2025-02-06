@@ -201,20 +201,10 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	private static int sumaDosNumeros() {
+	private static int Fibonacci() {
 		return 10+10;
 
 	}
 
-	private static int restaNumeros() {
-		return 30-20;
-	}
 	
-	private static double sumatorioDecimales() {
-		return 300.54 + 1500.45;
-	}
-	
-	private static int metodoTest() {
-		return 15+5;	
-	}
 }
