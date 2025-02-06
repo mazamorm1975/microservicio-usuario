@@ -200,7 +200,19 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
+	private static int FibonacciSecuencial(int a) {
+		
+		if(a == 0) {
+			return 0;
+		} 
+		
+		if(a > 0) {
+			return 1;
+		}
+		
+		//Se retorn el fibo
+		return 0;
+	}
 	
-
 	
 }
