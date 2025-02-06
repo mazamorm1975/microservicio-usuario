@@ -201,10 +201,7 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	private static int Fibonacci() {
-		return 10+10;
-
+	public static void Fibonacci() {
+		System.out.println("Esto es una prueba");
 	}
-
-	
 }
