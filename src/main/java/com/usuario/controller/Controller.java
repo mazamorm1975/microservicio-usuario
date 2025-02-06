@@ -200,7 +200,7 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	private static int FibonacciRecursivo(int a) {
+	private static int FibonacciSecuencial(int a) {
 		
 		if(a == 0) {
 			return 0;
@@ -211,7 +211,7 @@ public class Controller {
 		}
 		
 		//Se retorn el fibo
-		return FibonacciRecursivo(a) - FibonacciRecursivo(a-1);
+		return 0;
 	}
 	
 	
