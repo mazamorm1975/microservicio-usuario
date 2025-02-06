@@ -201,11 +201,7 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	public static int FibonacciRecursivo(int a, int b) {
-		
-		return a + b;
-	}
-
+	
 	
 	
 }
