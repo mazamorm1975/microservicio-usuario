@@ -200,8 +200,7 @@ public class Controller {
 		return new ResponseEntity<Motocicleta>(moto, HttpStatus.NO_CONTENT);
 	}
 	
-	private double multiplicar(int x, int  y) {
-		return x * y;
-	}
+	
+
 	
 }
